@@ -1,0 +1,57 @@
+<?php
+class User_model extends CI_model {
+    function create($formArray){
+        $this->db->insert('users',$formArray); //insert into users (name,lname) values (?,?);
+    }
+
+    function all(){
+        return $user=$this->db->get('users')->result_array(); //select *from users
+    }
+
+    function getUser($id){
+        $this->db->where('id',$id);
+        return $user=$this->db->get('users')->row_array();//select * from users where id=?
+    }
+
+    function updateUser($id,$formArray){
+        $this->db->where('id',$id);
+        $this->db->update('users',$formArray);//update users set name=''    
+    }
+
+    function deleteUser($id){
+        $this->db->where('id',$id);// delete from users where id=?
+        $this->db->delete('users');
+    }
+
+public function getUser1($fname)
+    {
+     return $this->db->where('fname',$fname)->get('users')->row();
+    }
+
+
+
+function get($formArray)
+{
+  $result = $this->db->select('*')->where('fname',$formArray['fname'])->where($this->encryption->decrypt('pass'),$formArray['pass'])->get('users')->row();
+//   $this->db->where('fname',$formArray);
+  
+  if(!empty($result))
+  {
+    return True;
+    // return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+function getdatabyname($fname){
+  $this->db->where('fname',$fname);
+  return $users=$this->db->get('users')->result_array(); //select * from users where id=?
+}
+
+}
+
+
+?>

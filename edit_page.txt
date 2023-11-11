@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> create application... users Updates</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url().'aeets/css/bootstrap.min.css'; ?>">
+</head>
+<body>
+    <div class="navbar navbar-dark bg-danger">
+        <div class="container">
+            <a href="#"> CRUD Application</a>
+        </div>
+    </div>
+    <div class="container" style="padding-top: 15px">
+        <h3>Update  User</h3>
+        <hr>
+        <form method="post" name="createUser" action=""<?php echo base_url().'index.php/user/edit/'.$user['id']; ?> autocomplete="off">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">First Name</label>
+                   <input type="text" name="fname" value="<?php echo set_value('fname',$user['fname']); ?>" class="form-control">
+                    <?php //echo form_error('fname'); ?>
+                </div>
+                <div class="form-group">
+                    <label for="name">last Name</label>
+                    <input type="text" name="lname" value="<?php echo set_value('lname',$user['lname']); ?>" class="form-control">
+                    <?php //echo form_error('lname'); ?>
+                </div>
+                <div class="form-group">
+                    <label for="name">Mail</label>
+                    <input type="email" name="mail" value="<?php echo set_value('mail',$user['mail']); ?>" class="form-control">
+                    <?php //echo form_error('mail'); ?>
+                </div>
+                <div class="form-group">
+                    <label for="name">Password</label>
+                    <input type="password" name="pass" value="<?php echo set_value('pass',$user['pass']); ?>" class="form-control">
+                    <?php //echo form_error('pass'); ?>
+                </div>
+                <div class="form-group">
+                    <label for="name">D.F.O</label>
+                    <input type="text" name="dob" value="<?php echo set_value('dob',$user['dob']); ?>" class="form-control">
+                    <?php //echo form_error('dob'); ?>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">update</button>
+                    <a href="<?php echo base_url().'index.php/user/index'; ?>" class="btn btn-danger">Cancel</a>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

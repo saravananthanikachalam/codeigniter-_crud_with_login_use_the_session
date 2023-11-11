@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Codeignatier-crud</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url().'style/css/style.css'; ?>">
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar">
+        <h2 class="logo"><a href="#">HostZop</a></h2>
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" id="hamburger-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <ul class="links">
+          <li><a href="#">Home</a></li>
+          <li><a href="<?php echo base_url('index.php/user/create'); ?>">Sign Up</a></li>
+          <li><a href="<?php echo base_url('index.php/user/login'); ?>">Sign In</a></li>
+          <li><a href="#">Portfolio</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+        <div class="buttons">
+          <a href="<?php echo base_url('index.php/user/login'); ?>" class="signin">Sign In</a>
+          <a href="<?php echo base_url('index.php/user/create'); ?>" class="signup">Sign Up</a>
+        </div>
+      </nav>
+    </header>
+    <section class="hero-section">
+      <div class="hero">
+        <h2>Codeigniter Project</h2>
+        <p>
+        CodeIgniter is an open-source software rapid 
+        development web framework, for use in building 
+        dynamic web sites with PHP.
+        </p>
+        <div class="buttons">
+          <a href="https://www.hostzop.com/" target="_blank" class="join">Join Now</a>
+          <a href="https://codeigniter.com/" target="_blank" class="learn">Learn More</a>
+        </div>
+      </div>
+      <div class="img">
+        <img src="<?php echo base_url().'style/img/hero-bg.png'; ?>" alt="hero image" />
+      </div>
+    </section>
+  </body>
+</html>

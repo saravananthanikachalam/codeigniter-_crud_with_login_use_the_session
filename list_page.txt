@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> create application... view users</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url().'aeets/css/bootstrap.min.css'; ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url().'style/css/list.css'; ?>">
+</head>
+<body>
+    <div class="navbar navbar-dark bg-danger">
+        <div class="container">
+            <a href="<?php echo base_url('index.php/user/Home'); ?>"> CRUD APPLICATION</a>
+        </div>
+    </div>
+
+    <div class="container" style="padding-top: 10px">
+    <div class="row">
+        <div class="col-md-10">
+        <?php
+    $success=$this->session->userdata('success');
+    if($success!=""){
+        ?>
+        <div class="alert alert-success"><?php echo $success; ?></div>
+        <?php
+    }
+    ?>
+    <?php
+    $failure=$this->session->userdata('failure');
+    if($failure!=""){
+        ?>
+        <div class="alert alert-danger"><?php echo $failure; ?></div>
+        <?php
+    }
+    ?>
+        </div>
+    </div>
+       
+
+                    <?php if(!empty($users)) 
+                    {
+                        ?>
+                         <div class="row">
+            <div class="col-md-10">
+             <div class="row">
+             <div class="col-6"><h3>View users</h3></div>
+             <div class="col-6 text-right">
+             <a href="<?php echo base_url().'index.php/user/create'; ?>" class="btn btn-primary">Create</a>
+            </div>
+        </div>
+        <hr>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-10">
+                <table class="table table-borderd">
+                    <th>ID</th>
+                    <th>FIRST NAME</th>
+                    <th>LAST NAME</th>
+                    <th>MAIL</th>
+                    <th>PASSWORD</th>
+                    <th>DATA.OF.BIRTH</th>
+                    <th width="60">EDIT</th>
+                    <th width="100">DELETE</th>
+                        <?php 
+                        foreach($users as $user){ ?>
+                    <tr>
+                        <td><?php echo $user['id'] ?></td>
+                        <td><?php echo $user['fname'] ?></td>
+                        <td><?php echo $user['lname'] ?></td>
+                        <td><?php echo $user['mail'] ?></td>
+                        <td><?php echo $this->encryption->decrypt($user['pass']) ?></td>
+                        <td><?php echo $user['dob'] ?></td>
+                        <td>
+                        <a href="<?php echo base_url().'index.php/user/edit/'.$user['id'] ?>" class="btn btn-primary">Edit</a>
+                        </td>
+                        <td>
+                        <a href="<?php echo base_url().'index.php/user/delete/'.$user['id'] ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    <?php }} else {?>
+                        <?php echo "<script> alert('please one more login ');
+                        window.location.href='login';
+                        </script>"; ?>
+                        <?php } ?>
+                        <?php $sara=$this->session->sess_destroy();
+                        ?>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<?php
+class User extends CI_controller{
+
+    function index(){
+        $this->load->model('User_model');
+        $users=$this->User_model->all();
+        $data=array();
+        $data['users']=$users;
+        $this->load->library('encryption');
+        $this->load->view('list',$data);
+
+
+        
+    }
+
+
+    function list()
+    {
+        
+        $this->load->model('User_model');
+        $fname=$this->session->userdata('fname');
+        $users=$this->User_model->getdatabyname($fname);
+        $data=array();
+        $data['users']=$users;
+        $this->load->library('encryption');
+        $this->load->library('session');
+        $this->load->view('list',$data);
+        
+        
+
+    }
+
+
+
+
+
+
+
+
+
+
+    function Home(){
+        $this->load->view('Home');
+    }
+    function Login(){
+        $this->load->view('Login');
+    }
+
+    function create (){
+
+        $this->load->model('User_model');
+        $this->form_validation->set_rules('fname','fname','required');
+        $this->form_validation->set_rules('lname','lname','required');
+        $this->form_validation->set_rules('mail','mail','required');
+        $this->form_validation->set_rules('pass','pass','required');
+        $this->form_validation->set_rules('dob','dob','required');
+
+        if($this->form_validation->run() == false){
+            $this->load->view('create');
+        }else{
+            //save user data base
+
+            $formArray=array();
+            $formArray['fname']=$this->input->post('fname');
+            $formArray['lname']=$this->input->post('lname');
+            $formArray['mail']=$this->input->post('mail');
+
+            $saro=$this->input->post('pass');
+
+            $this->load->library('encryption');
+ 
+
+            // $pass=$this->input->post('pass');
+            // $pass=$this->encryption->encrypt($pass);
+            // $formArray['pass']=$pass;
+            $formArray['pass']=$this->encryption->encrypt($saro);
+             //$formArray['pass']=$this->input->post('pass');
+    
+            $formArray['dob']=$this->input->post('dob');
+            $this->User_model->create($formArray);
+            $this->session->set_flashdata('success','Recored addes successfully!');
+            redirect(base_url().'index.php/user/Login');
+        }
+    }
+
+    function edit($id){
+        $this->load->model('User_model');
+        $user=$this->User_model->getUser($id);
+        $data=array();
+        $data['user']=$user;
+
+        $this->form_validation->set_rules('fname','fname','required');
+        $this->form_validation->set_rules('lname','lname','required');
+        $this->form_validation->set_rules('mail','mail','required');
+        $this->form_validation->set_rules('pass','pass','required');
+        $this->form_validation->set_rules('dob','dob','required');
+
+        if ($this->form_validation->run() == false){
+            $this->load->view('edit',$data);
+        }else{
+            //update user record
+            $formArray=array();
+            $formArray['fname']=$this->input->post('fname');
+            $formArray['lname']=$this->input->post('lname');
+            $formArray['mail']=$this->input->post('mail');
+            $formArray['pass']=$this->input->post('pass');
+            $formArray['dob']=$this->input->post('dob');
+            $this->User_model->updateUser($id, $formArray);
+            $this->session->set_flashdata('success','Recored update successfully!');
+            redirect(base_url().'index.php/user/index');
+        }
+
+    }
+
+    function delete($id){
+        $this->load->model('User_model');
+        $user=$this->User_model->getUser($id);
+        if(empty($user)){
+            $this->session->set_flashdata('failure','Recored not found in database!');
+            redirect(base_url().'index.php/user/index');
+        }
+        $this->User_model->deleteUser($id);
+        $this->session->set_flashdata('success','Recored deleted successfully!');
+        redirect(base_url().'index.php/user/index');
+    }
+
+
+
+
+
+function login_process()
+    {
+        $fname=$this->input->post('fname');
+        $pass=$this->input->post('pass');
+        $this->load->database();
+        $this->load->model('user_model');
+
+       if($users=$this->user_model->getUser1($fname))
+       {
+        $this->load->library('encryption');
+        if($this->encryption->decrypt($users->pass)==$pass)//password insert the same value check condition code
+        {
+            echo "login success";
+            $this->load->library('session');
+            $this->session->set_userdata('fname',$users->fname);
+            redirect(base_url().'index.php/user/list');
+        }
+        else{
+            echo "<script> alert(login error)</script>";
+        }
+       }
+       else{
+        echo"<script> alert('please enter the valid account')</script>";
+       }
+    }
+
+}
+?>
